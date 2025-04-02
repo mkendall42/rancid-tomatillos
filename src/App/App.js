@@ -1,6 +1,6 @@
 import './App.css';
 import searchIcon from '../icons/search.png';
-
+// testing 123...
 // Example imports (for later):
 // import { useState, useEffect } from 'react';
 // import moviePosters from '../data/movie_posters';
