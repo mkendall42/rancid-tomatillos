@@ -1,9 +1,15 @@
 .movie-poster {
-    background: white;
-    border-radius: 10px;
-    /* NOTE: will need to preserve image aspect ratio and decide on region to show */
-    height: 600px;
-    width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  text-align: center;
+  border-radius: 8px;
+  background: white;
+}
+
+.movie-poster img {
+  width: 100%;
 }
 
 .movie-poster-button-icons {
@@ -29,4 +35,3 @@
     height: 50px;
     width: 50px;
 }
-
