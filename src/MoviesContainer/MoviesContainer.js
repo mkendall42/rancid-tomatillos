@@ -1,7 +1,7 @@
 import './MoviesContainer.css';
 import MoviePoster from '../MoviePoster/MoviePoster';
 
-function Movies({ movies }) {
+function Movies({ movies, updateVoteCount }) {
   const moviePoster = movies.map(movie => {
     return (
       <MoviePoster 
@@ -10,6 +10,7 @@ function Movies({ movies }) {
         title={movie.title} 
         posterPath={movie.poster_path} 
         voteCount={movie.vote_count}
+        updateVoteCount={updateVoteCount}
       />
     );
   })

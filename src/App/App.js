@@ -11,12 +11,28 @@ import MoviesContainer from '../MoviesContainer/MoviesContainer';
 function App() {
   const [movies, setMovies] = useState(moviePosters);
 
+  const updateVoteCount = (moviePosterId, delta) => {
+
+    // debugger
+
+    //Find the relevant poster, then update the vote_count by delta
+    const currentMovie = movies.find((movie) => {
+      return movie.id === moviePosterId
+    })
+
+    currentMovie.vote_count += delta        //Is this a reference or a copy?  This will affect the outcome significantly...
+
+    console.log("votes: ", currentMovie.vote_count)
+
+    setMovies(movies)
+  }
+
   return (
     <main className='App'>
       <header>
         <h1>Rancid Tomatillos</h1>
       </header>
-        <MoviesContainer movies={movies} />
+        <MoviesContainer movies={movies} updateVoteCount={updateVoteCount} />
     </main>
   )
 }
