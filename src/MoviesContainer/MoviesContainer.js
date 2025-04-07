@@ -1,11 +1,31 @@
 import './MoviesContainer.css';
+import MoviePoster from '../MoviePoster/MoviePoster';
 
-function Movies() {
+function Movies({ movies }) {
+  const movieTitles = movies.map(movie => {
+    debugger;
+
+
+  })
+  const moviePoster = movies.map(movie => {
+    return (
+      <MoviePoster 
+      id={movie.id} 
+      key={movie.id}
+      title={movie.title} 
+      posterPath={movie.poster_path} 
+      voteCount={movie.vote_count}/>
+      // <MoviePoster movie={movie}/>
+    );
+    
+  })
+
   return (
-      <section className='MoviesContainer'>
-        <p>We'll make some movie posters show up here!</p>
-      </section>
-  );
+    <div className='movie-container'>
+      {moviePoster}
+    </div>
+  )
+
 }
   
 export default Movies;
