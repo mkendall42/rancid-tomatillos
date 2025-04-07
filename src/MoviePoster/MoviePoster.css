@@ -1,0 +1,12 @@
+.movie-poster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.movie-poster img {
+  width: 100%;
+}
