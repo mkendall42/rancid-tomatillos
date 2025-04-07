@@ -2,12 +2,17 @@ import './MoviesContainer.css';
 import MoviePoster from '../MoviePoster/MoviePoster';
 
 function Movies({ movies }) {
-  const movieTitles = movies.map(movie => {
-    debugger;
+
+  // debugger
+
+  // const movieTitles = movies.map(movie => {
+  //   // debugger;
 
 
-  })
+  // })
   const moviePoster = movies.map(movie => {
+    // debugger;
+
     return (
       <MoviePoster 
       id={movie.id} 
