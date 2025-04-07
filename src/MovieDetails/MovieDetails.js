@@ -1,9 +1,15 @@
 import './MovieDetails.css';
 
-function MovieDetails() {
+function MovieDetails({posterPath, genreIds, overview, title}) {
   return (
     <section className='MovieDetails'>
-      <p>Movie Details go here!</p>
+      <img src={posterPath} alt={`${title} backdrop`}></img>
+      <h2>{title}</h2>
+      <p>Genres: {genreIds}</p>
+      <article>
+        <h3>Overview</h3>
+        <p>{overview}</p>
+      </article>
     </section>
   );
 }
