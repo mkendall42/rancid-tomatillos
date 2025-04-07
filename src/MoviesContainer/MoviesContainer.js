@@ -1,7 +1,7 @@
 import './MoviesContainer.css';
 import MoviePoster from '../MoviePoster/MoviePoster';
 
-function MoviesContainer({ movies, onMovieClick }) {
+function MoviesContainer({ movies, onMovieClick, updateVoteCount }) {
   const moviePosters = movies.map(movie => {
     return (
       <MoviePoster 
@@ -11,6 +11,7 @@ function MoviesContainer({ movies, onMovieClick }) {
         posterPath={movie.poster_path} 
         voteCount={movie.vote_count}
         onClick={() => onMovieClick(movie.id)}
+        updateVoteCount={updateVoteCount}
       />
     );
   });
