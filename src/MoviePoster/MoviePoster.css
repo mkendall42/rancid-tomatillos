@@ -12,15 +12,11 @@
   width: 100%;
 }
 
-.movie-poster-button-icons {
-    height: 40px;
-    width: 40px;
-}
 
-.movie-poster img {
+/* .movie-poster img {
     height: 500px;
     width: 300px;
-}
+} */
 
 .movie-poster p {
     /* NOTE: actual vote count displayed here */
@@ -30,8 +26,13 @@
     /* padding: 8px 0px 5px 0px; */
 }
 
-.movie-poster button {
+.movie-poster .vote-button {
     /* NOTE: determine formatting here */
     height: 50px;
     width: 50px;
+}
+
+.movie-poster-button-icons {
+    height: 40px;
+    width: 40px;
 }
