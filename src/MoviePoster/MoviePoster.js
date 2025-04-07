@@ -1,10 +1,11 @@
 import './MoviePoster.css';
 
-function MoviePoster() {
+function MoviePoster({posterPath, voteCount}) {
   return (
-    <section className='MoviePoster'>
-      <p>This is a movie poster.</p>
-    </section>
+    <div className={`moviePoster`}>
+      <img src={posterPath} alt="image"></img>
+      <p>{voteCount}</p>
+    </div>
   );
 }
 
