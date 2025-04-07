@@ -8,6 +8,8 @@ import moviePosters from '../data/movie_posters';
 import MoviesContainer from '../MoviesContainer/MoviesContainer';
 // import MoviePoster from '../MoviePoster/MoviePoster'
 
+
+
 function App() {
   const [movies, setMovies] = useState(moviePosters);
 
