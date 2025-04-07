@@ -1,31 +1,25 @@
 import './MoviesContainer.css';
 import MoviePoster from '../MoviePoster/MoviePoster';
 
-function Movies({ movies }) {
-  const movieTitles = movies.map(movie => {
-    debugger;
-
-
-  })
-  const moviePoster = movies.map(movie => {
+function MoviesContainer({ movies, onMovieClick }) {
+  const moviePosters = movies.map(movie => {
     return (
       <MoviePoster 
-      id={movie.id} 
-      key={movie.id}
-      title={movie.title} 
-      posterPath={movie.poster_path} 
-      voteCount={movie.vote_count}/>
-      // <MoviePoster movie={movie}/>
+        id={movie.id} 
+        key={movie.id}
+        title={movie.title} 
+        posterPath={movie.poster_path} 
+        voteCount={movie.vote_count}
+        onClick={() => onMovieClick(movie.id)}
+      />
     );
-    
-  })
-
+  });
+  
   return (
-    <div className='movie-container'>
-      {moviePoster}
-    </div>
-  )
-
+    <section className='movie-container'>
+      {moviePosters}
+    </section>
+  );
 }
   
-export default Movies;
+export default MoviesContainer;
