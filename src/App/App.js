@@ -9,7 +9,7 @@ import MoviesContainer from '../MoviesContainer/MoviesContainer';
 import MoviePoster from '../MoviePoster/MoviePoster'
 
 function App() {
-  const [movies, setMovies] = useState([moviePosters]);
+  const [movies, setMovies] = useState(moviePosters);
   const allMoviePosters = moviePosters.map(movie => {
     return (
       <MoviePoster 
@@ -20,14 +20,25 @@ function App() {
       voteCount={movie.vote_count}/>
     );
   })
+
+  console.log("movies: ", movies)
+
+  // return (
+  //   <main className='App'>
+  //     <header>
+  //       <h1>rancid tomatillos</h1>
+  //     </header>
+  //       {allMoviePosters}
+  //   </main>
+  // );
   return (
     <main className='App'>
       <header>
         <h1>rancid tomatillos</h1>
       </header>
-        {allMoviePosters}
+        <MoviesContainer movies={movies} />
     </main>
-  );
+  )
 }
 
 export default App;
