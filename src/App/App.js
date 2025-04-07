@@ -12,19 +12,18 @@ function App() {
   const [movies, setMovies] = useState(moviePosters);
 
   const updateVoteCount = (moviePosterId, delta) => {
+    //Is there a quicker way to do this?  Would prefer to do a .find, update the key/value of that element, then just set the array
+    //NOTE: optional - ensure that vount count cannot be negative
+    const updatedMovies = movies.reduce((acc, movie) => {
+      if (movie.id === moviePosterId) {
+        movie.vote_count += delta
+      }
 
-    // debugger
+      acc.push(movie)
+      return acc
+    }, [])
 
-    //Find the relevant poster, then update the vote_count by delta
-    const currentMovie = movies.find((movie) => {
-      return movie.id === moviePosterId
-    })
-
-    currentMovie.vote_count += delta        //Is this a reference or a copy?  This will affect the outcome significantly...
-
-    console.log("votes: ", currentMovie.vote_count)
-
-    setMovies(movies)
+    setMovies(updatedMovies)
   }
 
   return (
