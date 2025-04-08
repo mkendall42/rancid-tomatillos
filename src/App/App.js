@@ -33,6 +33,27 @@ function App() {
     }, [])
 
     setMovies(updatedMovies)
+
+    //As a final step, we need to update the API
+    let direction = ""
+    if (delta > 0) {
+      direction = "up"
+    } else if (delta < 0) {
+      direction = "down"
+    } else {
+      console.log("Error: invalid vote change.")
+    }
+
+    const parameters = {
+      method: "PATCH",
+      body: JSON.stringify({ vote_direction: direction }),
+      headers: { "Content-Type": "application/json" }
+    }
+
+    fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${moviePosterId}`, parameters)
+      .then(response => response.json())
+      .then(data => console.log("Response JSON data: ", data))
+      .catch(error => console.log("Error response: ", error))
   }
   
   return (
