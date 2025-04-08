@@ -3,7 +3,7 @@ import './MovieDetails.css';
 function MovieDetails({posterPath, genreIds, overview, title}) {
   return (
     <section className='MovieDetails'>
-      <img src={posterPath} alt={`${title} backdrop`}></img>
+			<img src={posterPath} alt={`${title} backdrop`} />
       <h2>{title}</h2>
       <p>Genres: {genreIds}</p>
       <article>
