@@ -36,7 +36,8 @@ function App() {
 
     setMovies(updatedMovies)
 
-    //As a final step, we need to update the API
+    //Update the API and ensure vote count changed correctly
+    //NOTE: in order for vote count to persist between refresh, moviePosters must be fetched from API first (perhaps only at mount?)
     let direction = ""
     if (delta > 0) {
       direction = "up"
@@ -59,7 +60,9 @@ function App() {
   }
 
   function verifyVoteCountChange(old_count, new_count, delta) {
-    //Check that it changed by exactly delta; if not, log an error
+    if (new_count !== old_count + delta) {
+      console.log("Error: server/client: vote count did not update correctly relative to old value.")
+    }
   }
   
   return (
