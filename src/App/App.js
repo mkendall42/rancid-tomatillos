@@ -23,8 +23,10 @@ function App() {
   const updateVoteCount = (moviePosterId, delta) => {
     //Is there a quicker way to do this?  Would prefer to do a .find, update the key/value of that element, then just set the array
     //NOTE: optional - ensure that vount count cannot be negative
+    let old_vote_count = 0
     const updatedMovies = movies.reduce((acc, movie) => {
       if (movie.id === moviePosterId) {
+        old_vote_count = movie.vote_count
         movie.vote_count += delta
       }
 
@@ -41,7 +43,7 @@ function App() {
     } else if (delta < 0) {
       direction = "down"
     } else {
-      console.log("Error: invalid vote change.")
+      console.log("Error: client: invalid vote change.")
     }
 
     const parameters = {
@@ -52,8 +54,12 @@ function App() {
 
     fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${moviePosterId}`, parameters)
       .then(response => response.json())
-      .then(data => console.log("Response JSON data: ", data))
-      .catch(error => console.log("Error response: ", error))
+      .then(data => verifyVoteCountChange(old_vote_count, data.vote_count, delta))
+      .catch(error => console.log(error))
+  }
+
+  function verifyVoteCountChange(old_count, new_count, delta) {
+    //Check that it changed by exactly delta; if not, log an error
   }
   
   return (
