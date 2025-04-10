@@ -2,11 +2,9 @@ import './App.css';
 // import searchIcon from '../icons/search.png';
 import homeButton from '../icons/home.png'
 import { useState, useEffect } from 'react';
-// import moviePosters from '../data/movie_posters';
-// import movieDetailsData from '../data/movie_details';
 import MovieDetails from '../MovieDetails/MovieDetails.js'
 import MoviesContainer from '../MoviesContainer/MoviesContainer';
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 
 function App() {
@@ -19,13 +17,11 @@ function App() {
   }, [])
 
   function movieClick(data) {
-    // console.log("Here's the data!", data)
-    // return data
     setSelectedMovie(data);
   }
   
   function homeClick() {
-    setSelectedMovie(false);
+    setSelectedMovie(null);
   }
 
   function getMovies() {
@@ -43,7 +39,7 @@ function App() {
 
     const data = fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${movie_id}`)
     .then(response => response.json())
-		.then(data => setSelectedMovie(data))
+		.then(data => { setSelectedMovie(data); return data })
     .catch(error => {
       console.log(error)
       setError('Oops! Something went wrong! Please try again in a couple minutes.')
@@ -108,19 +104,6 @@ function App() {
         <Route path="/" element={<MoviesContainer movies={movies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
         <Route path="/:movie_id" element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
       </Routes>
-      {/* {!selectedMovie ? (
-        <Routes>
-          <Route 
-          <MoviesContainer 
-            movies={movies} 
-            getMovieDetails={getMovieDetails}
-            updateVoteCount={updateVoteCount} />
-        </Routes> 
-			) : (
-        <MovieDetails
-					movie={selectedMovie}
-        />
-      )} */}
     </main>
   )
 }

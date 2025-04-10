@@ -1,16 +1,18 @@
 import './MovieDetails.css';
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function MovieDetails({ getMovieDetails, selectedMovie }) {
-  //Extract ID from params
-  const id = useParams().movie_id
-  console.log(id)
-  //Grab movie from getMovieDetails
-  getMovieDetails(id)
-  const movie = selectedMovie
-  console.log(movie)
+  const { movie_id } = useParams();
 
-  
+  useEffect(() => {
+    getMovieDetails(movie_id)
+  }, []);
+
+	if (!selectedMovie) {
+    return <p>Loading Page...</p>;
+  }
+  const movie = selectedMovie;
 
   return (
     <section className='MovieDetails'>
