@@ -45,8 +45,6 @@ function App() {
     })
   }
 
-
-  
   const updateVoteCount = (moviePosterId, delta) => {
     //Is there a quicker way to do this?  Would prefer to do a .find, update the key/value of that element, then just set the array
     //NOTE: optional - ensure that vount count cannot be negative
@@ -106,10 +104,7 @@ function App() {
 					updateVoteCount={updateVoteCount} />
 			) : (
         <MovieDetails
-          posterPath={selectedMovie.backdrop_path}
-          genreIds={selectedMovie.genres}
-          overview={selectedMovie.overview}
-          title={selectedMovie.title}
+					movie={selectedMovie}
         />
       )}
     </main>
