@@ -94,7 +94,7 @@ function App() {
     <main className='App'>
       <header>
         <h1>rancid tomatillos</h1>
-        {selectedMovie && (<button onClick={homeClick}><img src={homeButton} alt="Home" /></button>
+        {selectedMovie && (<button className='home-button' onClick={homeClick}><img src={homeButton} alt="Home" /></button>
         )}
       </header>
       {!selectedMovie ? ( 
