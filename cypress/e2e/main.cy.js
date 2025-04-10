@@ -1,6 +1,6 @@
 // Mock data to use for testing:
 import posters from '../fixtures/movie_posters.json'
-// import details from '../fixtures/movie_details.json' 
+import details from '../fixtures/movie_details.json' 
 
 describe('Main Page', () => {
   beforeEach(() => {
@@ -34,4 +34,30 @@ describe('Main Page', () => {
   })
 })
 
+describe('Details Page', () => {
+  beforeEach(() => {
+    cy.intercept("GET", "https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies", {
+      statusCode: 200,
+      fixture: "movie_posters"
+    })
 
+    cy.intercept("GET", "https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/155", {
+      statusCode: 200,
+      fixture: "movie_details"
+    })
+
+    cy.visit('http://localhost:3000/')
+  })
+
+	it('has the details for the movie', () =>{
+		cy.get('.details-button').first().click()
+		.get('h3').should('have.text', 'Overview')
+		.get('.genre-tag').first().should('have.text', 'Animation')
+	})
+
+	it('has the details for the movie', () =>{
+		cy.get('.details-button').first().click()
+		cy.get('.home-button').click()
+    .get('.movie-poster').should('have.length', 4)
+	})
+})
