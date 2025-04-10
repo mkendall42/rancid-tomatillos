@@ -2,6 +2,25 @@
 import posters from '../fixtures/movie_posters.json'
 // import details from '../fixtures/movie_details.json' 
 
+//Where is the best place to put these?
+function setPatchIntercept(index, updatedPosterObject) {
+  //NOTE: this doesn't seem to work inside a given test
+  cy.intercept("PATCH", `/api/v1/movies/${posters[index].id}`, {
+    statusCode: 200,
+    body: updatedPosterObject
+  })
+}
+
+function changePosterVoteCount(index, delta) {
+  return {
+    "id": posters[index].id,
+    "title": posters[index].title,
+    "poster_path": posters[index].poster_path,
+    "vote_count": posters[index].vote_count + delta
+  }
+}
+
+
 describe('Main Page', () => {
   beforeEach(() => {
     cy.intercept("GET", "https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies", {
@@ -32,6 +51,33 @@ describe('Main Page', () => {
     .get('.movie-poster').last().find('img').should('exist')
     .get('.movie-poster').last().find('.vote-count').should('have.text', '27642')
   })
+
+  describe('Main page - vote count specific tests', () => {
+    it('can upvote to increase vote count by one', () => {
+      const posterIndex = 1
+      const updatedPoster = changePosterVoteCount(posterIndex, 1)
+      // setPatchIntercept(posterIndex, updatedPoster)
+
+      cy.get('.movie-container').get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count)
+  
+      //Prepare intercept; then send request to increase vote by one (no need to test return JSON because it's stubbed)
+      cy.intercept("PATCH", `/api/v1/movies/${posters[posterIndex].id}`, {
+        statusCode: 200,
+        body: updatedPoster
+      })
+  
+      //Check that vote count element increases by one
+      cy.get('.movie-poster').eq(posterIndex).find('#up-vote').should('have.class', 'vote-button')
+        .click().get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count + 1)
+    })
+    
+    //More tests to implement:
+    // - downvote by one
+    // - sad path: invalid movie id
+    // - upvote + downvote combo is correct; also does not disturb another movie's stats
+    // - sad path: MAYBE - incorrect PATH body gives error.  Note: wouldn't this require an actual API call to really be sure?...
+  })
+
 })
 
 
