@@ -3,13 +3,13 @@ import posters from '../fixtures/movie_posters.json'
 // import details from '../fixtures/movie_details.json' 
 
 //Where is the best place to put these?
-function setPatchIntercept(index, updatedPosterObject) {
-  //NOTE: this doesn't seem to work inside a given test
+Cypress.Commands.add('setPatchIntercept', (index, updatedPosterObject) => {
+  //I ended up having to do this one this way (intercept was being lost otherwise - scope issue?)
   cy.intercept("PATCH", `/api/v1/movies/${posters[index].id}`, {
     statusCode: 200,
     body: updatedPosterObject
   })
-}
+})
 
 function changePosterVoteCount(index, delta) {
   return {
@@ -56,15 +56,11 @@ describe('Main Page', () => {
     it('can upvote to increase vote count by one', () => {
       const posterIndex = 1
       const updatedPoster = changePosterVoteCount(posterIndex, 1)
-      // setPatchIntercept(posterIndex, updatedPoster)
 
       cy.get('.movie-container').get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count)
   
       //Prepare intercept; then send request to increase vote by one (no need to test return JSON because it's stubbed)
-      cy.intercept("PATCH", `/api/v1/movies/${posters[posterIndex].id}`, {
-        statusCode: 200,
-        body: updatedPoster
-      })
+      cy.setPatchIntercept(posterIndex, updatedPoster)
   
       //Check that vote count element increases by one
       cy.get('.movie-poster').eq(posterIndex).find('#up-vote').should('have.class', 'vote-button')
@@ -77,11 +73,8 @@ describe('Main Page', () => {
 
       cy.get('.movie-container').get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count)
   
-      cy.intercept("PATCH", `/api/v1/movies/${posters[posterIndex].id}`, {
-        statusCode: 200,
-        body: updatedPoster
-      })
-  
+      cy.setPatchIntercept(posterIndex, updatedPoster)
+
       cy.get('.movie-poster').eq(posterIndex).find('#down-vote').should('have.class', 'vote-button')
         .click().get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count - 1)
     })
@@ -99,11 +92,11 @@ describe('Main Page', () => {
         expect(response.status).to.eq(404)
       })
     })
-    
-    //More tests to implement:
-    // - sad path: invalid movie id
-    // - upvote + downvote combo is correct; also does not disturb another movie's stats
+
+    //More tests to potentially implement:
+    // - upvote + downvote combo is correct; also does not disturb another movie's stats.  NOTE: is this really needed?  Also, requires click()s without immediate assertions...
     // - sad path: MAYBE - incorrect PATH body gives error.  Note: wouldn't this require an actual API call to really be sure?...
+    // - sad path: MAYBE - downvoting when vote count = 0 does nothing (though I think negative votes should be allowed!)
   })
 
 })
