@@ -70,9 +70,23 @@ describe('Main Page', () => {
       cy.get('.movie-poster').eq(posterIndex).find('#up-vote').should('have.class', 'vote-button')
         .click().get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count + 1)
     })
+
+    it('can downvote to decrease vote count by one', () => {
+      const posterIndex = 1
+      const updatedPoster = changePosterVoteCount(posterIndex, -1)
+
+      cy.get('.movie-container').get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count)
+  
+      cy.intercept("PATCH", `/api/v1/movies/${posters[posterIndex].id}`, {
+        statusCode: 200,
+        body: updatedPoster
+      })
+  
+      cy.get('.movie-poster').eq(posterIndex).find('#down-vote').should('have.class', 'vote-button')
+        .click().get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count - 1)
+    })
     
     //More tests to implement:
-    // - downvote by one
     // - sad path: invalid movie id
     // - upvote + downvote combo is correct; also does not disturb another movie's stats
     // - sad path: MAYBE - incorrect PATH body gives error.  Note: wouldn't this require an actual API call to really be sure?...
