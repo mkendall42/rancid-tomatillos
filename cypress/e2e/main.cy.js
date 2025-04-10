@@ -85,6 +85,20 @@ describe('Main Page', () => {
       cy.get('.movie-poster').eq(posterIndex).find('#down-vote').should('have.class', 'vote-button')
         .click().get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count - 1)
     })
+
+    it('sad path: movie id does not exist', () => {
+      //How would I implement this in any fancier way?  Stubbing seems silly (we're setting it up to fail on purpose);
+      //and hitting the real API isn't ideal (though it doesn't change votes at least).
+      //For now, hitting the real API:
+      cy.request({
+        url: "https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies",
+        method: "PATCH",
+        body: { "vote_direction": "up" },
+        failOnStatusCode: false
+      }).then(response => {
+        expect(response.status).to.eq(404)
+      })
+    })
     
     //More tests to implement:
     // - sad path: invalid movie id
