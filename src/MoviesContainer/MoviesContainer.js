@@ -18,7 +18,9 @@ function MoviesContainer({ movies, getMovieDetails, updateVoteCount }) {
   
   return (
     <section className='movie-container'>
-      {moviePosters}
+      {/* <Routes> */}
+        {moviePosters}
+      {/* </Routes> */}
     </section>
   );
 }

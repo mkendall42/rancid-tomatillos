@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 // import movieDetailsData from '../data/movie_details';
 import MovieDetails from '../MovieDetails/MovieDetails.js'
 import MoviesContainer from '../MoviesContainer/MoviesContainer';
+import { Routes, Route, Link } from 'react-router-dom'
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
   }, [])
 
   function movieClick(data) {
+    // console.log("Here's the data!", data)
+    // return data
     setSelectedMovie(data);
   }
   
@@ -35,14 +38,18 @@ function App() {
     })
   }
 
-  function getMovieDetails(movie_id) {
-    fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${movie_id}`)
+  const getMovieDetails = (movie_id) => {
+    console.log("I'm here!")
+
+    const data = fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${movie_id}`)
     .then(response => response.json())
-		.then(data => movieClick(data))
+		.then(data => setSelectedMovie(data))
     .catch(error => {
       console.log(error)
       setError('Oops! Something went wrong! Please try again in a couple minutes.')
     })
+
+    return data
   }
 
   const updateVoteCount = (moviePosterId, delta) => {
@@ -97,16 +104,23 @@ function App() {
         {selectedMovie && (<button className='home-button' onClick={homeClick}><img src={homeButton} alt="Home" /></button>
         )}
       </header>
-      {!selectedMovie ? ( 
-				<MoviesContainer 
-					movies={movies} 
-				  getMovieDetails={getMovieDetails}
-					updateVoteCount={updateVoteCount} />
+      <Routes>
+        <Route path="/" element={<MoviesContainer movies={movies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
+        <Route path="/:movie_id" element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
+      </Routes>
+      {/* {!selectedMovie ? (
+        <Routes>
+          <Route 
+          <MoviesContainer 
+            movies={movies} 
+            getMovieDetails={getMovieDetails}
+            updateVoteCount={updateVoteCount} />
+        </Routes> 
 			) : (
         <MovieDetails
 					movie={selectedMovie}
         />
-      )}
+      )} */}
     </main>
   )
 }
