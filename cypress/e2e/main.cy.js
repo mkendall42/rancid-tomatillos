@@ -52,5 +52,12 @@ describe('Details Page', () => {
 	it('has the details for the movie', () =>{
 		cy.get('.details-button').first().click()
 		.get('h3').should('have.text', 'Overview')
+		.get('.genre-tag').first().should('have.text', 'Animation')
+	})
+
+	it('has the details for the movie', () =>{
+		cy.get('.details-button').first().click()
+		cy.get('.home-button').click()
+    .get('.movie-poster').should('have.length', 4)
 	})
 })
