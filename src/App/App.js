@@ -3,8 +3,9 @@ import './App.css';
 import homeButton from '../icons/home.png'
 import { useState, useEffect } from 'react';
 import MovieDetails from '../MovieDetails/MovieDetails.js'
+import ErrorPage from '../ErrorPage/ErrorPage.js'
 import MoviesContainer from '../MoviesContainer/MoviesContainer';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, NavLink} from 'react-router-dom'
 
 
 function App() {
@@ -13,7 +14,13 @@ function App() {
   const [error, setError] = useState('')
 	
   useEffect(() => {
-    getMovies();
+    fetch('https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies')
+    .then(response => response.json())
+    .then(data => setMovies([...movies, ...data]))
+    .catch(error => {
+      console.log(error)
+      setError('Oops! Something went wrong! Please try again in a couple minutes.')
+    })
   }, [])
 
   function movieClick(data) {
@@ -25,13 +32,7 @@ function App() {
   }
 
   function getMovies() {
-    fetch('https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies')
-    .then(response => response.json())
-    .then(data => setMovies([...movies, ...data]))
-    .catch(error => {
-      console.log(error)
-      setError('Oops! Something went wrong! Please try again in a couple minutes.')
-    })
+
   }
 
   const getMovieDetails = (movie_id) => {
@@ -39,7 +40,7 @@ function App() {
 
     const data = fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${movie_id}`)
     .then(response => response.json())
-		.then(data => { setSelectedMovie(data); return data })
+		.then(data => { setSelectedMovie(data); data })
     .catch(error => {
       console.log(error)
       setError('Oops! Something went wrong! Please try again in a couple minutes.')
@@ -92,17 +93,17 @@ function App() {
       console.log("Error: server/client: vote count did not update correctly relative to old value.")
     }
   }
-  
+
   return (
     <main className='App'>
       <header>
         <h1>rancid tomatillos</h1>
-        {selectedMovie && (<button className='home-button' onClick={homeClick}><img src={homeButton} alt="Home" /></button>
-        )}
+        <NavLink to="/" className={({ isActive }) => !isActive ? "home-button" : "hidden"}><img src={homeButton} alt="Home" /></NavLink>
       </header>
       <Routes>
         <Route path="/" element={<MoviesContainer movies={movies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
-        <Route path="/:movie_id" element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
+        <Route path='/:movie_id' element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </main>
   )

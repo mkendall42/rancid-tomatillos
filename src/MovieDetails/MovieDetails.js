@@ -1,4 +1,5 @@
 import './MovieDetails.css';
+import ErrorPage from '../ErrorPage/ErrorPage'
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -8,11 +9,16 @@ function MovieDetails({ getMovieDetails, selectedMovie }) {
   useEffect(() => {
     getMovieDetails(movie_id)
   }, []);
-
+  
 	if (!selectedMovie) {
     return <p>Loading Page...</p>;
   }
+  
   const movie = selectedMovie;
+
+  if (!movie.backdrop_path) {
+    return <ErrorPage />
+  }
 
   return (
     <section className='MovieDetails'>
