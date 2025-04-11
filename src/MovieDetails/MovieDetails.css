@@ -2,13 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
   border-radius: 12px;
 }
 
 .MovieDetails img {
-  width: 90%;
-	height: 30%;
+  width: 80%;
   border-radius: 12px;
   margin-bottom: 1rem;
 }
@@ -18,9 +16,11 @@
   margin-bottom: 0.5rem;
 }
 
-.MovieDetails .genres-tag {
+.MovieDetails .genre-tag {
   color: #666;
   margin-bottom: 1rem;
+	backround: white;
+	boarder-radius: 8px;
 }
 
 .MovieDetails article {
