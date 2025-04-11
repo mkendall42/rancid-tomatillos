@@ -128,3 +128,14 @@ describe('Details Page', () => {
     .get('.movie-poster').should('have.length', 4)
 	})
 })
+
+describe('Invalid Page', () => {
+  it('Returns error message if invalid page is visited', () => {
+    cy.visit("http://localhost:3000/potato")
+      .get('.error-page').should('have.text', 'Movie not found')
+  })
+
+  it('', () => {
+    
+  })
+})
