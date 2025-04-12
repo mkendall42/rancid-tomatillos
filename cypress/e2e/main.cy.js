@@ -128,3 +128,21 @@ describe('Details Page', () => {
     .get('.movie-poster').should('have.length', 4)
 	})
 })
+
+describe('Invalid Page', () => {
+  it('Returns error message if invalid page is visited', () => {
+    cy.visit("http://localhost:3000/potato")
+      .get('.error-page').should('have.text', 'Movie not found')
+  })
+
+  it('Return error message for additional routing paths (i.e. after valid movie id', () => {
+    cy.intercept("GET", "https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/155", {
+      statusCode: 200,
+      fixture: "movie_details"
+    })
+
+    cy.visit("http://localhost:3000/155/banana")
+    .get('h1').contains('rancid tomatillos')
+    .get('.error-page').should('have.text', 'Movie not found')
+  })
+})

@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import MovieDetails from '../MovieDetails/MovieDetails.js'
 import ErrorPage from '../ErrorPage/ErrorPage.js'
 import MoviesContainer from '../MoviesContainer/MoviesContainer';
+import SearchForm from '../SearchForm/SearchForm'
 import { Routes, Route, NavLink} from 'react-router-dom'
 
 
@@ -12,6 +13,8 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState('')
+  const [searchedMovies, setSearchedMovies] = useState(null)
+
 	
   useEffect(() => {
     fetch('https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies')
@@ -23,24 +26,24 @@ function App() {
     })
   }, [])
 
-  function movieClick(data) {
-    setSelectedMovie(data);
-  }
+  // function movieClick(data) {
+  //   setSelectedMovie(data);
+  // }
   
-  function homeClick() {
-    setSelectedMovie(null);
-  }
+  // function homeClick() {
+  //   setSelectedMovie(null);
+  // }
 
-  function getMovies() {
+  // function getMovies() {
 
-  }
+  // }
 
   const getMovieDetails = (movie_id) => {
     console.log("I'm here!")
 
     const data = fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${movie_id}`)
     .then(response => response.json())
-		.then(data => { setSelectedMovie(data); data })
+		.then(data => { setSelectedMovie(data) })
     .catch(error => {
       console.log(error)
       setError('Oops! Something went wrong! Please try again in a couple minutes.')
@@ -99,11 +102,12 @@ function App() {
       <header>
         <h1>rancid tomatillos</h1>
         <NavLink to="/" className={({ isActive }) => !isActive ? "home-button" : "hidden"}><img src={homeButton} alt="Home" /></NavLink>
+        <SearchForm movies={movies} setSearchedMovies={setSearchedMovies} />
       </header>
       <Routes>
-        <Route path="/" element={<MoviesContainer movies={movies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
+        <Route path="/" element={<MoviesContainer movies={movies} searchedMovies={searchedMovies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
         <Route path='/:movie_id' element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<ErrorPage error={error} />} />
       </Routes>
     </main>
   )

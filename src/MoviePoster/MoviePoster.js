@@ -1,7 +1,7 @@
 import './MoviePoster.css';
 import downvoteIcon from '../icons/downvote.png'
 import upvoteIcon from '../icons/upvote.png'
-import { Link, Routes, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function MoviePoster({ id, posterPath, voteCount, title, getMovieDetails, updateVoteCount }) {
   return (
