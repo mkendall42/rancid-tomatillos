@@ -10,9 +10,11 @@ function SearchForm({ movies, setSearchedMovies }) {
 
 		if (event.target.value === '') {
 			setSearchedMovies(movies);
-			return;
 		}
 
+
+		console.log("searchText:", searchText);
+		console.log("input:", input);
 		const filteredMovies = movies.filter(movie =>
 			movie.title.toLowerCase().includes(input.toLowerCase())
 		);
