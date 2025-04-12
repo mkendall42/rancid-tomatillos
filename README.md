@@ -13,7 +13,8 @@
 
 <h2 align="center">✨ Overview ✨</h2>
 
-<p align="center">This is the front end of a web application that makes API calls to TMDB to display movie posters, allowing users to click to upvote or downvote a movie. It also displays a short overview of the movie when clicked on.</p>
+<p align="center">This is the front end of a web application that makes API calls to TMDB to display movie posters. It allows users to click to upvote or downvote a movie. It also displays a short overview of the movie when clicked on.
+</p>
 
 <h2 align="center"> 🛠️ TODO / Roadmap</h2>
   
