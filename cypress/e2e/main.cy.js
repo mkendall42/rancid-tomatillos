@@ -1,8 +1,7 @@
-// Mock data to use for testing:
 import posters from '../fixtures/movie_posters.json'
 import details from '../fixtures/movie_details.json' 
 
-//Where is the best place to put these?
+//Where is the best place to put these functions used for certain (but not all) tests?
 Cypress.Commands.add('setPatchIntercept', (index, updatedPosterObject) => {
   //I ended up having to do this one this way (intercept was being lost otherwise - scope issue?)
   cy.intercept("PATCH", `/api/v1/movies/${posters[index].id}`, {
@@ -32,7 +31,6 @@ describe('Main Page', () => {
 	})
 
   it('displays title on page load', () => {
-    // hint: you'll want to add an intercept here if you are making a network request on page load!
     cy.get('h1')
     .contains('rancid tomatillos')
   })
@@ -59,7 +57,7 @@ describe('Main Page', () => {
 
       cy.get('.movie-container').get('.movie-poster').eq(posterIndex).find('.vote-count').should('have.text', posters[posterIndex].vote_count)
   
-      //Prepare intercept; then send request to increase vote by one (no need to test return JSON because it's stubbed)
+      //Prepare intercept; then send request to increase vote by one (no need to test returned JSON because it's stubbed)
       cy.setPatchIntercept(posterIndex, updatedPoster)
   
       //Check that vote count element increases by one
@@ -92,11 +90,6 @@ describe('Main Page', () => {
         expect(response.status).to.eq(404)
       })
     })
-
-    //More tests to potentially implement:
-    // - upvote + downvote combo is correct; also does not disturb another movie's stats.  NOTE: is this really needed?  Also, requires click()s without immediate assertions...
-    // - sad path: MAYBE - incorrect PATH body gives error.  Note: wouldn't this require an actual API call to really be sure?...
-    // - sad path: MAYBE - downvoting when vote count = 0 does nothing (though I think negative votes should be allowed!)
   })
 
 })

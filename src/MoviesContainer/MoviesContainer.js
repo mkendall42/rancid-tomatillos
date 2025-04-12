@@ -20,9 +20,7 @@ function MoviesContainer({ movies, searchedMovies, getMovieDetails, updateVoteCo
   
   return (
     <section className='movie-container'>
-      {/* <Routes> */}
         {moviePosters}
-      {/* </Routes> */}
     </section>
   );
 }
