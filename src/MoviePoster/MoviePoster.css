@@ -2,46 +2,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 180px; */
   width: 20%;
   text-align: center;
   border-radius: 8px;
   background: white;
+  margin: 1% 0% 1% 0%;
 }
 
 .movie-poster img {
   width: 100%;
-  /* width: 180px; */
-  border-radius: 8px;
+  border-radius: 8px 8px 0px 0px;
 }
 
 h3 {
     border-style: none none solid none;
     width: 100%;
+    font-size: 1.5vw;
 }
 
-
-/* .movie-poster img {
-    height: 500px;
-    width: 300px;
-} */
-
 .movie-poster p {
-    /* NOTE: actual vote count displayed here */
     color: black;
-    font-size: 1.2em;
+    font-size: 1.5vw;
     font-weight: normal;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin: 0%;
 }
 
 .movie-poster .vote-button {
-    /* NOTE: determine formatting here */
-    /* height: 50px; */
-    /* width: 50px; */
     width: 10%;
     background-color: white;
     border: none;
@@ -53,8 +44,8 @@ h3 {
 }
 
 .movie-poster-button-icons {
-    height: 20px;
-    /* width: 40px; */
+    height: 2vw;
+    width: 2vw;
 }
 
 .vote-count {

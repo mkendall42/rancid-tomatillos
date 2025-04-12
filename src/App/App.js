@@ -99,7 +99,7 @@ function App() {
 				<SearchForm movies={movies} setSearchedMovies={setSearchedMovies} />
 			</header>
 			<Routes>
-				<Route path="/" element={<MoviesContainer movies={movies} searchedMovies={searchedMovies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
+				<Route path="/" element={<MoviesContainer className=''movies={movies} searchedMovies={searchedMovies} getMovieDetails={getMovieDetails} updateVoteCount={updateVoteCount} />} />
 				<Route path='/:movie_id' element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
 				<Route path="*" element={<ErrorPage error={error} />} />
 			</Routes>

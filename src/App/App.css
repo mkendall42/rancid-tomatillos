@@ -31,12 +31,6 @@ p {
   color: white;
 }
 
-.movies-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .movie-poster {
   width: 200px;
   text-align: center;
