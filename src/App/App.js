@@ -26,8 +26,6 @@ function App() {
 	}, [])
 
 	const getMovieDetails = (movie_id) => {
-		console.log("I'm here!")
-
 		const data = fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${movie_id}`)
 			.then(response => response.json())
 			.then(data => { setSelectedMovie(data) })
@@ -40,26 +38,10 @@ function App() {
 	}
 
 	const updateVoteCount = (moviePosterId, delta) => {
-		//Is there a quicker way to do this?  Would prefer to do a .find, update the key/value of that element, then just set the array
-		//NOTE: optional - ensure that vount count cannot be negative
-		// let old_vote_count = 0
-		// const updatedMovies = movies.reduce((acc, movie) => {
-		// 	if (movie.id === moviePosterId) {
-		// 		old_vote_count = movie.vote_count
-		// 		movie.vote_count += delta
-		// 	}
-
-		// 	acc.push(movie)
-		// 	return acc
-		// }, [])
-
-    // findMovieIndex(id)
-
-		// setMovies(updatedMovies)
+    //Create new movie array and update vote count of specific movie element, then update 'movies' state var (aside: is there a quicker way to do this?)
 		setMovies(updateMovies(moviePosterId, delta))
 
-		//Update the API and ensure vote count changed correctly
-		//NOTE: in order for vote count to persist between refresh, moviePosters must be fetched from API first (perhaps only at mount?)
+		//Update the API and ensure vote count changed correctly (later: try to move to another file / other reorganizing?)
 		let direction = ""
 		if (delta > 0) {
 			direction = "up"
@@ -74,7 +56,7 @@ function App() {
 			body: JSON.stringify({ vote_direction: direction }),
 			headers: { "Content-Type": "application/json" }
 		}
-    let old_vote_count = 1
+
 		fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${moviePosterId}`, parameters)
 			.then(response => response.json())
 			.then(data => verifyVoteCountChange(data, findMovie(moviePosterId)))
@@ -103,8 +85,7 @@ function App() {
     })
   }
 
-	function verifyVoteCountChange(data, changedMovie) { //old_count, new_count, delta) {
-    // debugger
+	function verifyVoteCountChange(data, changedMovie) {
     if (data.vote_count !== changedMovie.vote_count) {
       console.log("Error: server/client: vote count did not update correctly relative to the old value.")
     }
