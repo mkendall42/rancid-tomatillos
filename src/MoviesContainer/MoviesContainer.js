@@ -1,7 +1,7 @@
 import './MoviesContainer.css';
 import MoviePoster from '../MoviePoster/MoviePoster';
 
-function MoviesContainer({ movies, searchedMovies, getMovieDetails, updateVoteCount }) {
+function MoviesContainer({ movies, searchedMovies, updateVoteCount }) {
   const currentMovies = !searchedMovies ? movies : searchedMovies
 
   const moviePosters = currentMovies.map(movie => {
@@ -13,7 +13,6 @@ function MoviesContainer({ movies, searchedMovies, getMovieDetails, updateVoteCo
         posterPath={movie.poster_path} 
         voteCount={movie.vote_count}
         updateVoteCount={updateVoteCount}
-				getMovieDetails={() => getMovieDetails(movie.id)}
       />
     );
   });
