@@ -125,7 +125,7 @@ describe('Details Page', () => {
 describe('Invalid Page', () => {
   it('Returns error message if invalid page is visited', () => {
     cy.visit("http://localhost:3000/potato")
-      .get('.error-page').should('have.text', 'Movie not found')
+      .get('.error-page').should('have.text', 'Error loading page: page not found / movie ID invalid')
   })
 
   it('Return error message for additional routing paths (i.e. after valid movie id', () => {
@@ -136,6 +136,6 @@ describe('Invalid Page', () => {
 
     cy.visit("http://localhost:3000/155/banana")
     .get('h1').contains('rancid tomatillos')
-    .get('.error-page').should('have.text', 'Movie not found')
+    .get('.error-page').should('have.text', 'Error loading page: page not found / movie ID invalid')
   })
 })
