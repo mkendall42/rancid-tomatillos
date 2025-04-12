@@ -103,6 +103,8 @@ function App() {
 				<Route path='/:movie_id' element={<MovieDetails selectedMovie={selectedMovie} getMovieDetails={getMovieDetails} />} />
 				<Route path="*" element={<ErrorPage error={error} />} />
 			</Routes>
+			{/*If any error is set, just render the error page; NOTE: this is causing bizarre issue with missing image*/}
+			{/* {error && <ErrorPage error={error} />} */}
 		</main>
 	)
 }
