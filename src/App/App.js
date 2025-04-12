@@ -78,7 +78,10 @@ function App() {
 		fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${moviePosterId}`, parameters)
 			.then(response => response.json())
 			.then(data => verifyVoteCountChange(data, findMovie(moviePosterId)))
-			.catch(error => console.log(error))
+			.catch(error => {
+        console.log(error)
+				setError('Oops! The vote count may not have been updated correctly.  Try revisiting in a couple of minutes.')
+      })
 	}
 
   function updateMovies(id, delta) {
