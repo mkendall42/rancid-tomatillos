@@ -118,7 +118,7 @@ describe('Details Page', () => {
 
 	it('has the details for the movie', () =>{
 		cy.get('.details-button').first().click()
-		.get('h3').should('have.text', 'Overview')
+		.get('.overview').should('have.text', 'A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.')
 		.get('.genre-tag').first().should('have.text', 'Animation')
 	})
 

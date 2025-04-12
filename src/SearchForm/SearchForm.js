@@ -2,40 +2,36 @@ import { useState } from 'react';
 import './SearchForm.css';
 
 function SearchForm({ movies, setSearchedMovies }) {
-  const [searchText, setSearchText] = useState('');
-//   const [searchedMovies, setSearchedMovies] = useState(movies)
+	const [searchText, setSearchText] = useState('');
 
-//   function clearInput() {
-//     setTitle('');
-//     setDescription('');
-//   }
+	function weLikeFiniteLoops(event) {
+		let input = event.target.value
+		setSearchText(input)
 
-  function weLikeFiniteLoops(event) {
-      setSearchText(event.target.value)
+		if (event.target.value === '') {
+			setSearchedMovies(movies);
+		}
 
-      if (event.target.value = '') {
-        setSearchedMovies(null)
-      }
-      
-      const filteredMovies = movies.filter(movie => {
-        console.log(searchText)
-        return movie.title.includes(searchText)
-      })
 
-      setSearchedMovies(filteredMovies)
-    }
+		console.log("searchText:", searchText);
+		console.log("input:", input);
+		const filteredMovies = movies.filter(movie =>
+			movie.title.toLowerCase().includes(input.toLowerCase())
+		);
+		setSearchedMovies(filteredMovies)
+	}
 
-  return (
-    <form>
-    <input
-      type='text'
-      placeholder='Enter your search term here'
-      name='title'
-      value={searchText}
-      onChange={event => weLikeFiniteLoops(event)}
-    />
-  </form>
-  )
+	return (
+		<form>
+			<input
+				type='text'
+				placeholder='Enter your search term here'
+				name='title'
+				value={searchText}
+				onChange={event => weLikeFiniteLoops(event)}
+			/>
+		</form>
+	)
 }
 
 export default SearchForm
